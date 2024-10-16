@@ -104,8 +104,27 @@ func main() {
 
 	//--------------------lesson 8 ------------------------------
 
-	Oleg := Person{name: "Oleg", age: 41, sity: "Tereb"}
-	Oleg.Greeting()
-	Oleg.Set("Ivan", 78, "")
+	//Oleg := Person{name: "Oleg", age: 41, sity: "Tereb"}
+	//Oleg.Greeting()
+	//Oleg.Set("Ivan", 78, "")
+	//----------------------les 9-----------------------
+	var i NyInt
 
+	i = MyStruct{
+		name: "HHH",
+	}
+	i.Foo()
+
+}
+
+type NyInt interface {
+	Foo()
+}
+
+type MyStruct struct {
+	name string
+}
+
+func (s MyStruct) Foo() {
+	fmt.Println(s.name)
 }
