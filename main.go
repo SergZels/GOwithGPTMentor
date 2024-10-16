@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"time"
 )
 
 //TIP To run your code, right-click the code and select <b>Run</b>. Alternatively, click
@@ -11,8 +10,17 @@ import (
 func main() {
 	//TIP Press <shortcut actionId="ShowIntentionActions"/> when your caret is at the underlined or highlighted text
 	// to see how GoLand suggests fixing it.
-	s := "Sergii"
-	tim := time.Now().Format("2006-01-02")
-	fmt.Printf("Hello and welcome, %s %s!", s, tim)
+	var age int
+
+	fmt.Print("Введіть ваш вік:")
+	fmt.Scanln(&age)
+
+	if age < 18 {
+		fmt.Println("Ви ще не повнолітній")
+	} else if age > 18 && age < 65 {
+		fmt.Println("Вітаю Ви повнолітній")
+	} else {
+		fmt.Println("You are a senior citizen.")
+	}
 
 }
