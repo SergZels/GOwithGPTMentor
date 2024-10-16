@@ -13,6 +13,11 @@ func greet(name string) string {
 	return "Hello " + name
 }
 
+func addToMap(m map[string]int, name string, age int) map[string]int {
+	m[name] = age
+	return m
+}
+
 func main() {
 
 	//---------------lesson1------------------------
@@ -36,16 +41,49 @@ func main() {
 	//println(greet("Serg"))
 	//---------------lesson 6-------------------
 	//mymass := [...]int{4, 5, 6, 2, 9}
-	var mymass [5]int
-	mymass[0] = 3
-	mymass[1] = 2
-	mymass[2] = 1
+	//var mymass [5]int
+	//mymass[0] = 3
+	//mymass[1] = 2
+	//mymass[2] = 1
+	//
+	//fmt.Println(mymass)
+	//
+	////sli := []int{1, 2, 3, 4, 5}
+	//sli := mymass[0:5]
+	//sli = append(sli, 5, 9)
+	//fmt.Printf("Slice:%d len-%d", sli, len(sli))
+	//--------------lesson 7 map----------------------
 
-	fmt.Println(mymass)
+	//piple := make(map[string]int)
+	//piple["Ivan"] = 55
+	//piple["Olga"] = 32
 
-	//sli := []int{1, 2, 3, 4, 5}
-	sli := mymass[0:5]
-	sli = append(sli, 5, 9)
-	fmt.Printf("Slice:%d len-%d", sli, len(sli))
+	piple := map[string]int{
+		"Olga": 25,
+		"Dima": 17,
+	}
 
+	for k, v := range piple {
+
+		fmt.Printf("%s %d\n", k, v)
+	}
+	var name string
+	for {
+		fmt.Println("Enter your name: ")
+		fmt.Scanln(&name)
+		if name == "exit" {
+			break
+		}
+		val, exes := piple[name]
+		if exes {
+			fmt.Printf("%s is %d", name, val)
+		} else {
+			fmt.Printf("%s not found enter age:", name)
+			var age int
+			fmt.Scanln(&age)
+			piple = addToMap(piple, name, age)
+			fmt.Println(piple)
+
+		}
+	}
 }
