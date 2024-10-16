@@ -1,9 +1,8 @@
 package main
 
-import "fmt"
-
-//TIP To run your code, right-click the code and select <b>Run</b>. Alternatively, click
-// the <icon src="AllIcons.Actions.Execute"/> icon in the gutter and select the <b>Run</b> menu item from here.
+import (
+	"fmt"
+)
 
 func multiply(a, b int) int {
 	return a * b
@@ -16,6 +15,22 @@ func greet(name string) string {
 func addToMap(m map[string]int, name string, age int) map[string]int {
 	m[name] = age
 	return m
+}
+
+type Person struct {
+	name string
+	age  int
+	sity string
+}
+
+func (p Person) Greeting() {
+	fmt.Printf("Name: %s Age: %d Sity: %s", p.name, p.age, p.sity)
+}
+
+func (p Person) Set(name string, age int, s string) {
+	p.name = name
+	p.age = age
+	p.sity = s
 }
 
 func main() {
@@ -58,32 +73,39 @@ func main() {
 	//piple["Ivan"] = 55
 	//piple["Olga"] = 32
 
-	piple := map[string]int{
-		"Olga": 25,
-		"Dima": 17,
-	}
+	//piple := map[string]int{
+	//	"Olga": 25,
+	//	"Dima": 17,
+	//}
+	//
+	//for k, v := range piple {
+	//
+	//	fmt.Printf("%s %d\n", k, v)
+	//}
+	//var name string
+	//for {
+	//	fmt.Println("Enter your name: ")
+	//	fmt.Scanln(&name)
+	//	if name == "exit" {
+	//		break
+	//	}
+	//	val, exes := piple[name]
+	//	if exes {
+	//		fmt.Printf("%s is %d", name, val)
+	//	} else {
+	//		fmt.Printf("%s not found enter age:", name)
+	//		var age int
+	//		fmt.Scanln(&age)
+	//		piple = addToMap(piple, name, age)
+	//		fmt.Println(piple)
+	//
+	//	}
+	//}
 
-	for k, v := range piple {
+	//--------------------lesson 8 ------------------------------
 
-		fmt.Printf("%s %d\n", k, v)
-	}
-	var name string
-	for {
-		fmt.Println("Enter your name: ")
-		fmt.Scanln(&name)
-		if name == "exit" {
-			break
-		}
-		val, exes := piple[name]
-		if exes {
-			fmt.Printf("%s is %d", name, val)
-		} else {
-			fmt.Printf("%s not found enter age:", name)
-			var age int
-			fmt.Scanln(&age)
-			piple = addToMap(piple, name, age)
-			fmt.Println(piple)
+	Oleg := Person{name: "Oleg", age: 41, sity: "Tereb"}
+	Oleg.Greeting()
+	Oleg.Set("Ivan", 78, "")
 
-		}
-	}
 }
