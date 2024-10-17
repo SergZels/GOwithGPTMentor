@@ -2,6 +2,9 @@ package main
 
 import (
 	"fmt"
+
+	"math/rand"
+	"time"
 )
 
 func multiply(a, b int) int {
@@ -33,6 +36,23 @@ func (p Person) Set(name string, age int, s string) {
 	p.sity = s
 }
 
+type NyInt interface {
+	Foo()
+}
+
+type MyStruct struct {
+	name string
+}
+
+func (s MyStruct) Foo() {
+	fmt.Println(s.name)
+}
+
+func someSleep(i int) {
+	random := rand.Intn(5000)                            // Генеруємо випадкову кількість мілісекунд
+	time.Sleep(time.Duration(random) * time.Millisecond) // Конвертуємо в мілісекунди
+	fmt.Printf("Hi from %d\n", i)
+}
 func main() {
 
 	//---------------lesson1------------------------
@@ -108,23 +128,27 @@ func main() {
 	//Oleg.Greeting()
 	//Oleg.Set("Ivan", 78, "")
 	//----------------------les 9-----------------------
-	var i NyInt
+	//var i NyInt
+	//
+	//i = MyStruct{
+	//	name: "HHH",
+	//}
+	//i.Foo()
+	//-----------------------les 10-----------------
 
-	i = MyStruct{
-		name: "HHH",
+	for i := 0; i < 10; i++ {
+		go someSleep(i)
 	}
-	i.Foo()
+	time.Sleep(time.Second * 10)
 
+	ch := make(chan string)
+
+	go sendDataCh(ch, "Hi from go rutine")
+	valFromCh := <-ch
+
+	fmt.Printf("ValFromCh: %s\n", valFromCh)
 }
 
-type NyInt interface {
-	Foo()
-}
-
-type MyStruct struct {
-	name string
-}
-
-func (s MyStruct) Foo() {
-	fmt.Println(s.name)
+func sendDataCh(ch chan string, data string) {
+	ch <- data
 }
