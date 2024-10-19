@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"sync"
 
 	"math/rand"
 	"time"
@@ -136,19 +137,63 @@ func main() {
 	//i.Foo()
 	//-----------------------les 10-----------------
 
-	for i := 0; i < 10; i++ {
-		go someSleep(i)
+	//for i := 0; i < 10; i++ {
+	//	go someSleep(i)
+	//}
+	//time.Sleep(time.Second * 10)
+	//
+	//ch := make(chan string)
+	//
+	//go sendDataCh(ch, "Hi from go rutine")
+	//valFromCh := <-ch
+	//
+	//fmt.Printf("ValFromCh: %s\n", valFromCh)
+
+	//---------------11--------------------------
+	var wg sync.WaitGroup
+
+	for i := 1; i <= 5; i++ {
+		wg.Add(1) // додаємо горутину до групи
+		go func(i int) {
+			defer wg.Done() // повідомляємо про завершення горутини
+			time.Sleep(time.Second * 2)
+			fmt.Printf("Goroutine %d done\n", i)
+		}(i)
 	}
-	time.Sleep(time.Second * 10)
 
-	ch := make(chan string)
+	wg.Wait() // чекаємо на завершення всіх горутин
+	fmt.Println("All goroutines finished")
 
-	go sendDataCh(ch, "Hi from go rutine")
-	valFromCh := <-ch
+	for i := 0; i < 1000; i++ {
 
-	fmt.Printf("ValFromCh: %s\n", valFromCh)
+		go increment2()
+	}
+
+	fmt.Println("Final counter value2:", counter2)
+
+	for i := 0; i < 1000; i++ {
+		wg.Add(1)
+		go increment(&wg)
+	}
+
+	wg.Wait()
+	fmt.Println("Final counter value:", counter)
 }
 
 func sendDataCh(ch chan string, data string) {
 	ch <- data
+}
+
+var mu sync.Mutex
+var counter int
+var counter2 int
+
+func increment(wg *sync.WaitGroup) {
+	defer wg.Done()
+	mu.Lock() // блокуємо доступ до змінної counter
+	counter++
+	mu.Unlock() // знімаємо блокування
+}
+func increment2() {
+	counter2++
 }
